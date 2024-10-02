@@ -16,7 +16,7 @@ for item in "${ansible_play_hosts[@]}"; do
     if (( inventory_number < item_number )); then
         echo "$inventory_hostname connects to $item on port $current_port"
         echo "${ipAddresses[index]}"
-        command="jacktrip -n 1 -C ${ipAddresses[index]} -K $inventory_hostname -J $item -B $current_port"
+        command="jacktrip -n 1 -C ${ipAddresses[index]} -K $inventory_hostname -J $item -B $current_port &"
         
         # Execute the command
         eval $command
