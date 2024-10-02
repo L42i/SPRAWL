@@ -1,6 +1,6 @@
 #!/bin/bash
 
-inventory_hostname=$(hostname)
+inventory_hostname="student1"
 base_port=4464 
 ansible_play_hosts=("student1" "student2" "student3" "student4" "student5" "student6" "student7" "student8" "student9" "student10" "student11" "student12")  # List of hostnames
 ipAddresses=("10.10.10.101" "10.10.10.102" "10.10.10.103" "10.10.10.104" "10.10.10.105" "10.10.10.106" "10.10.10.107" "10.10.10.108" "10.10.10.109" "10.10.10.110" "10.10.10.111" "10.10.10.112")
