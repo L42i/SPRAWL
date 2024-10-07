@@ -4,4 +4,4 @@ killall jacktrip
 
 jacktrip -S &
 
-sclang meshMixer.scd
+scide meshMixer.scd
