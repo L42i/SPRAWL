@@ -1,0 +1,25 @@
+---
+- name: Start Jacktrip Mesh
+  hosts: myservers
+  gather_facts: false
+  tasks:
+    - name: Kill all JackTrip instances
+      command: killall jacktrip
+      ignore_errors: true
+    
+    - name: Launch JackTrip server
+      shell: jacktrip -S
+      async: 2592000
+      poll: 0
+
+    - name: Launch Clients
+      shell: jacktrip -n 1 -C {{ item }} -K {{ inventory_hostname }} -J {{ item }} -B {{ base_port + index }}
+      async: 2592000
+      poll: 0
+      loop: "{{ ansible_play_hosts | difference([inventory_hostname]) }}"
+      loop_control:
+        index_var: index
+      when: inventory_hostname < item
+
+  vars:
+    base_port: 4464
