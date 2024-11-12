@@ -14,6 +14,12 @@
       register: ps
       async: 2592000
       poll: 0
+
+    - name: Copy start super collider
+      copy:
+        src: ./ringControl.scd
+        dest: /home/student
+        mode: '0755'
       
     - name: start jackd
       shell: |
