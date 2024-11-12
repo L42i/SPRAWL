@@ -1,0 +1,36 @@
+---
+- name: mesh
+  hosts: myservers
+  gather_facts: false
+  tasks:
+    - name: disonnect existing I/O's
+      shell: |
+        for outerSource in $(jack_lsp); 
+          do for innerSource in $(jack_lsp); 
+          do jack_disconnect $outerSource $innerSource;
+        done;
+        done;
+        sleep 3
+      register: ps
+      async: 2592000
+      poll: 0
+
+
+
+
+
+    - name: print
+      debug:
+        msg: | 
+         jacktrip -C {{ hostvars[groups['myservers'][(groups['myservers'].index(inventory_hostname) + 1) % groups['myservers'] | length]].ansible_host }} -J {{ groups['myservers'][(groups['myservers'].index(inventory_hostname) + 1) % groups['myservers'] | length] }} -K {{ inventory_hostname }} 
+
+
+        
+         
+      
+
+
+  
+    
+  vars:
+    base_port: 4464
