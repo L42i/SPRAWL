@@ -5,10 +5,9 @@
   tasks:
     - name: killAll
       shell: |
-        killall qjackctl
         killall jacktrip
         killall sclang
-        killall scsynth
+        pkill scsynth
         killall aj-snapshot  
         killall jackd
       register: ps
@@ -17,7 +16,7 @@
       
     - name: start jackd
       shell: |
-        jackd -P 95 -a a -d alsa -d hw:Gen -r 48000 -p 128 -n 2  &
+        jackd -a a -d alsa -d hw:Gen -r 48000 -p 128 -n 2 -v > jack_log.txt &
         sleep 3
       register: ps
       async: 2592000
@@ -25,7 +24,7 @@
 
     - name: start jacktrip
       shell: |
-        jacktrip -S &
+        jacktrip -S -D > jacktrip_log.txt 2>&1 &
         sleep 3
       register: ps
       async: 2592000
