@@ -1,0 +1,60 @@
+---
+- name: mesh
+  hosts: myservers
+  gather_facts: false
+  tasks:
+    - name: killAll
+      shell: |
+        killall -9 qjackctl
+        killall jacktrip
+        killall sclang
+        killall scsynth
+        killall aj-snapshot  
+        killall jackd
+      register: ps
+      async: 2592000
+      poll: 0
+
+    - name: start jackd
+      shell: |
+        jackd -P 95 -a a -d alsa -d hw:Gen -r 48000 -p 128 -n 2  &
+        sleep 3
+      register: ps
+      async: 2592000
+      poll: 0
+
+    - name: start jacktrip
+      shell: |
+        jacktrip -S &
+        sleep 3
+      register: ps
+      async: 2592000
+      poll: 0
+    
+    - name: Launch Clients
+      shell: jacktrip -n 1 -C {{ item }} -K {{ inventory_hostname }} -J {{ item }} -B {{ base_port + index }}
+      async: 2592000
+      poll: 0
+      loop: "{{ groups['myservers']| difference([inventory_hostname]) }}"
+      loop_control:
+        index_var: index
+      when: index < groups['myservers'].index(inventory_hostname)
+
+    - name: Launch Clients
+      debug:
+        msg: | 
+          jacktrip -n 1 -C {{ item }} -K {{ inventory_hostname }} -J {{ item }} -B {{ base_port + index }}
+      loop: "{{ ansible_play_hosts | difference([inventory_hostname]) }}"
+      loop_control:
+        index_var: index
+      when: inventory_hostname < item
+
+
+              
+      
+
+
+  
+    
+  vars:
+    base_port: 4464
