@@ -5,13 +5,16 @@
   tasks:
 
     - name: Launch Clients
-      shell: jacktrip -n 1 -C {{ item }} -K {{ inventory_hostname }} -J {{ item }} -B {{ base_port + index }}
+      shell: jacktrip -n 1 -C {{ ansible_host }} -J {{ inventory_hostname }}_incoming -K {{ item }} -B {{ base_port + index }}
       async: 2592000
       poll: 0
       loop: "{{ ansible_play_hosts | difference([inventory_hostname]) }}"
       loop_control:
         index_var: index
-      when: inventory_hostname < item
+      ## when: "{{ index+1 > groups['myservers'].index(inventory_hostname) }}"
 
+     
+
+  
   vars:
     base_port: 4464
