@@ -1,7 +1,6 @@
-s.boot;
-s.killAll;
-s.freeAll;
+s.waitForBoot
 
+{
 (
 SynthDef(\Wave, {
 	|out = 0.5, freq = 400, range = 200, dur = 2.1|
@@ -43,5 +42,6 @@ button.mouseDownAction = {~wave_synth = Synth(\Wave,
 //w.fullScreen;
 w.front;
 )
+};
 
 //s.freeAll;
