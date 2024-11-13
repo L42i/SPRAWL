@@ -14,3 +14,17 @@ The hardware of 16 Access Points has been upgraded to:
 - 10' touchscreen
 - Neumann KH120
 
+# Running Playbooks
+
+
+## Without SSH Keys
+
+Install ssh pass:
+
+    apt isntall sshpass
+
+With no ssh keys deployed, the playbooks can be executed with the following command:
+
+    ansible-playbook -k -i ../../../config/hosts.ini  mesh_servers.yml
+
+The '-k' argument will initiate a query for the user password on the PI.
