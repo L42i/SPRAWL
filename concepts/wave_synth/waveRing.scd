@@ -1,7 +1,6 @@
 s.waitForBoot
 
 {
-(
 SynthDef(\Wave, {
 	|out = 0.5, freq = 400, range = 200, dur = 2.1|
 
@@ -11,10 +10,7 @@ SynthDef(\Wave, {
 		LPF.ar(in: WhiteNoise.ar(out), freq: freqEnv) * ampEnv
     );
 }).send(s);
-)
 
-
-(
 var w = Window("Slider", Rect(128, 64, 1200, 800));
 
 var button = Button(w, Rect(400,50,200,200));
@@ -39,9 +35,5 @@ button.mouseDownAction = {~wave_synth = Synth(\Wave,
 	 \range, linlin(rangeSlider.value.postln, 0, 1, 200, 600)]
 )};
 
-//w.fullScreen;
 w.front;
-)
 };
-
-//s.freeAll;
