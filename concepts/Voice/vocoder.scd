@@ -1,14 +1,14 @@
-(
 s.waitForBoot {
+    var window, vocoderSlider, reverbSlider, vocoderAmount, reverbAmount, vocoderSynth;
+    var sliderWidth = 120;
+    var sliderHeight = Window.screenBounds.height - 200;
+    var centerX = (Window.screenBounds.width - (2 * sliderWidth + 40)) / 2; // Center both sliders with spacing
+    var sliderY = 100;
+    window = Window("Vocoder and Reverb Control", Rect(0, 0, Window.screenBounds.width, Window.screenBounds.height));
 
-    var window, slider, vocoderAmount, vocoderSynth;
-
-    // GUI
-    window = Window("Vocoder Control", Rect(100, 100, 300, 100));
-
-    // Create audio input and vocoder SynthDefs
-    SynthDef(\vocoderEffect, { |inBus = 1, outBus = 0, vocoderAmount = 0.5|
-        var input, modulator, vocoder, dry, wet;
+    // Combined Vocoder and Reverb SynthDef
+    SynthDef(\vocoderReverbEffect, { |inBus = 1, outBus = 0, vocoderAmount = 0, reverbAmount = 0|
+        var input, modulator, vocoder, dryVocoder, wetVocoder, vocoderOutput, reverbOutput;
 
         // Input from audio input 1
         input = SoundIn.ar(inBus);
@@ -19,26 +19,36 @@ s.waitForBoot {
         // Vocoder processing
         vocoder = PV_MagMul(FFT(LocalBuf(512), input), FFT(LocalBuf(512), modulator));
 
-        // Blend between dry (unprocessed) and wet (processed) signals
-        dry = input;
-        wet = IFFT(vocoder);
-        Out.ar(outBus, XFade2.ar(dry, wet, vocoderAmount * 2 - 1));
+        // Blend between dry (unprocessed) and wet (processed) vocoder signals
+        dryVocoder = input;
+        wetVocoder = IFFT(vocoder);
+        vocoderOutput = XFade2.ar(dryVocoder, wetVocoder, vocoderAmount * 2 - 1);
+
+        reverbOutput = FreeVerb.ar(vocoderOutput, mix: reverbAmount);
+
+        // Output reverb to both left and right channels
+        Out.ar(outBus, reverbOutput.dup);
     }).add;
 
-    s.sync;  // Wait for the server to sync the SynthDef
+    s.sync; // Wait for the server to sync the SynthDefs
 
-    // Create the vocoder synth
-    vocoderSynth = Synth(\vocoderEffect);
+    // Create the combined vocoder and reverb synth
+    vocoderSynth = Synth(\vocoderReverbEffect);
 
-    // Slider for controlling the vocoder amount
-    slider = Slider(window, Rect(20, 20, 260, 20))
-        .action_({ |s|
-            vocoderAmount = s.value;
+    vocoderSlider = Slider(window, Rect(centerX, sliderY, sliderWidth, sliderHeight))
+        .orientation_(\vertical) // Set slider orientation to vertical
+        .action_({ |sl|
+            vocoderAmount = sl.value;
             vocoderSynth.set(\vocoderAmount, vocoderAmount);
         });
 
-    // Set initial slider value and open window
-    slider.value = 0; // Start at 50% vocoder amount
+    reverbSlider = Slider(window, Rect(centerX + sliderWidth + 40, sliderY, sliderWidth, sliderHeight))
+        .orientation_(\vertical) // Set slider orientation to vertical
+        .action_({ |sl|
+            reverbAmount = sl.value;
+            vocoderSynth.set(\reverbAmount, reverbAmount);
+        });
+    vocoderSlider.value = 0; // Start at 0% vocoder amount
+    reverbSlider.value = 0;  // Start at 0% reverb amount
     window.front;
 };
-)
