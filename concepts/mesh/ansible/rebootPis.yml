@@ -1,0 +1,6 @@
+- name: Reboot all pis
+  hosts: myservers
+  become: yes
+  tasks:
+    - name: turn off
+      command: sudo reboot
