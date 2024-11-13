@@ -1,0 +1,277 @@
+skipping: [student1] => (item=student1) 
+skipping: [student2] => (item=student1) 
+skipping: [student2] => (item=student2) 
+ok: [student1] => (item=student2) => {
+    "msg": "10.10.10.101 is trying to connect to 10.10.10.102\n101 102\n"
+}
+skipping: [student3] => (item=student1) 
+skipping: [student4] => (item=student1) 
+skipping: [student3] => (item=student2) 
+ok: [student2] => (item=student3) => {
+    "msg": "10.10.10.102 is trying to connect to 10.10.10.103\n102 103\n"
+}
+skipping: [student3] => (item=student3) 
+skipping: [student4] => (item=student2) 
+ok: [student1] => (item=student3) => {
+    "msg": "10.10.10.101 is trying to connect to 10.10.10.103\n101 103\n"
+}
+skipping: [student5] => (item=student1) 
+ok: [student2] => (item=student4) => {
+    "msg": "10.10.10.102 is trying to connect to 10.10.10.104\n102 104\n"
+}
+skipping: [student4] => (item=student3) 
+ok: [student3] => (item=student4) => {
+    "msg": "10.10.10.103 is trying to connect to 10.10.10.104\n103 104\n"
+}
+skipping: [student5] => (item=student2) 
+skipping: [student4] => (item=student4) 
+ok: [student1] => (item=student4) => {
+    "msg": "10.10.10.101 is trying to connect to 10.10.10.104\n101 104\n"
+}
+ok: [student2] => (item=student5) => {
+    "msg": "10.10.10.102 is trying to connect to 10.10.10.105\n102 105\n"
+}
+skipping: [student5] => (item=student3) 
+ok: [student4] => (item=student5) => {
+    "msg": "10.10.10.104 is trying to connect to 10.10.10.105\n104 105\n"
+}
+ok: [student3] => (item=student5) => {
+    "msg": "10.10.10.103 is trying to connect to 10.10.10.105\n103 105\n"
+}
+ok: [student1] => (item=student5) => {
+    "msg": "10.10.10.101 is trying to connect to 10.10.10.105\n101 105\n"
+}
+skipping: [student5] => (item=student4) 
+ok: [student2] => (item=student6) => {
+    "msg": "10.10.10.102 is trying to connect to 10.10.10.106\n102 106\n"
+}
+skipping: [student5] => (item=student5) 
+ok: [student4] => (item=student6) => {
+    "msg": "10.10.10.104 is trying to connect to 10.10.10.106\n104 106\n"
+}
+ok: [student3] => (item=student6) => {
+    "msg": "10.10.10.103 is trying to connect to 10.10.10.106\n103 106\n"
+}
+ok: [student1] => (item=student6) => {
+    "msg": "10.10.10.101 is trying to connect to 10.10.10.106\n101 106\n"
+}
+ok: [student2] => (item=student7) => {
+    "msg": "10.10.10.102 is trying to connect to 10.10.10.107\n102 107\n"
+}
+ok: [student5] => (item=student6) => {
+    "msg": "10.10.10.105 is trying to connect to 10.10.10.106\n105 106\n"
+}
+ok: [student3] => (item=student7) => {
+    "msg": "10.10.10.103 is trying to connect to 10.10.10.107\n103 107\n"
+}
+ok: [student4] => (item=student7) => {
+    "msg": "10.10.10.104 is trying to connect to 10.10.10.107\n104 107\n"
+}
+ok: [student5] => (item=student7) => {
+    "msg": "10.10.10.105 is trying to connect to 10.10.10.107\n105 107\n"
+}
+ok: [student2] => (item=student8) => {
+    "msg": "10.10.10.102 is trying to connect to 10.10.10.108\n102 108\n"
+}
+ok: [student3] => (item=student8) => {
+    "msg": "10.10.10.103 is trying to connect to 10.10.10.108\n103 108\n"
+}
+ok: [student1] => (item=student7) => {
+    "msg": "10.10.10.101 is trying to connect to 10.10.10.107\n101 107\n"
+}
+ok: [student4] => (item=student8) => {
+    "msg": "10.10.10.104 is trying to connect to 10.10.10.108\n104 108\n"
+}
+ok: [student2] => (item=student9) => {
+    "msg": "10.10.10.102 is trying to connect to 10.10.10.109\n102 109\n"
+}
+ok: [student5] => (item=student8) => {
+    "msg": "10.10.10.105 is trying to connect to 10.10.10.108\n105 108\n"
+}
+ok: [student4] => (item=student9) => {
+    "msg": "10.10.10.104 is trying to connect to 10.10.10.109\n104 109\n"
+}
+ok: [student2] => (item=student10) => {
+    "msg": "10.10.10.102 is trying to connect to 10.10.10.110\n102 110\n"
+}
+ok: [student3] => (item=student9) => {
+    "msg": "10.10.10.103 is trying to connect to 10.10.10.109\n103 109\n"
+}
+ok: [student5] => (item=student9) => {
+    "msg": "10.10.10.105 is trying to connect to 10.10.10.109\n105 109\n"
+}
+ok: [student1] => (item=student8) => {
+    "msg": "10.10.10.101 is trying to connect to 10.10.10.108\n101 108\n"
+}
+ok: [student4] => (item=student10) => {
+    "msg": "10.10.10.104 is trying to connect to 10.10.10.110\n104 110\n"
+}
+ok: [student2] => (item=student11) => {
+    "msg": "10.10.10.102 is trying to connect to 10.10.10.111\n102 111\n"
+}
+ok: [student5] => (item=student10) => {
+    "msg": "10.10.10.105 is trying to connect to 10.10.10.110\n105 110\n"
+}
+ok: [student3] => (item=student10) => {
+    "msg": "10.10.10.103 is trying to connect to 10.10.10.110\n103 110\n"
+}
+ok: [student1] => (item=student9) => {
+    "msg": "10.10.10.101 is trying to connect to 10.10.10.109\n101 109\n"
+}
+ok: [student4] => (item=student11) => {
+    "msg": "10.10.10.104 is trying to connect to 10.10.10.111\n104 111\n"
+}
+ok: [student5] => (item=student11) => {
+    "msg": "10.10.10.105 is trying to connect to 10.10.10.111\n105 111\n"
+}
+ok: [student3] => (item=student11) => {
+    "msg": "10.10.10.103 is trying to connect to 10.10.10.111\n103 111\n"
+}
+ok: [student1] => (item=student10) => {
+    "msg": "10.10.10.101 is trying to connect to 10.10.10.110\n101 110\n"
+}
+ok: [student2] => (item=student12) => {
+    "msg": "10.10.10.102 is trying to connect to 10.10.10.112\n102 112\n"
+}
+ok: [student4] => (item=student12) => {
+    "msg": "10.10.10.104 is trying to connect to 10.10.10.112\n104 112\n"
+}
+ok: [student5] => (item=student12) => {
+    "msg": "10.10.10.105 is trying to connect to 10.10.10.112\n105 112\n"
+}
+ok: [student1] => (item=student11) => {
+    "msg": "10.10.10.101 is trying to connect to 10.10.10.111\n101 111\n"
+}
+ok: [student3] => (item=student12) => {
+    "msg": "10.10.10.103 is trying to connect to 10.10.10.112\n103 112\n"
+}
+ok: [student1] => (item=student12) => {
+    "msg": "10.10.10.101 is trying to connect to 10.10.10.112\n101 112\n"
+}
+skipping: [student6] => (item=student1) 
+skipping: [student6] => (item=student2) 
+skipping: [student7] => (item=student1) 
+skipping: [student6] => (item=student3) 
+skipping: [student7] => (item=student2) 
+skipping: [student8] => (item=student1) 
+skipping: [student6] => (item=student4) 
+skipping: [student7] => (item=student3) 
+skipping: [student8] => (item=student2) 
+skipping: [student7] => (item=student4) 
+skipping: [student10] => (item=student1) 
+skipping: [student6] => (item=student5) 
+skipping: [student9] => (item=student1) 
+skipping: [student6] => (item=student6) 
+skipping: [student8] => (item=student3) 
+skipping: [student7] => (item=student5) 
+skipping: [student10] => (item=student2) 
+skipping: [student9] => (item=student2) 
+skipping: [student7] => (item=student6) 
+skipping: [student10] => (item=student3) 
+ok: [student6] => (item=student7) => {
+    "msg": "10.10.10.106 is trying to connect to 10.10.10.107\n106 107\n"
+}
+skipping: [student7] => (item=student7) 
+skipping: [student8] => (item=student4) 
+skipping: [student10] => (item=student4) 
+skipping: [student9] => (item=student3) 
+skipping: [student8] => (item=student5) 
+skipping: [student10] => (item=student5) 
+skipping: [student9] => (item=student4) 
+ok: [student7] => (item=student8) => {
+    "msg": "10.10.10.107 is trying to connect to 10.10.10.108\n107 108\n"
+}
+skipping: [student8] => (item=student6) 
+ok: [student6] => (item=student8) => {
+    "msg": "10.10.10.106 is trying to connect to 10.10.10.108\n106 108\n"
+}
+skipping: [student10] => (item=student6) 
+skipping: [student9] => (item=student5) 
+skipping: [student10] => (item=student7) 
+ok: [student7] => (item=student9) => {
+    "msg": "10.10.10.107 is trying to connect to 10.10.10.109\n107 109\n"
+}
+skipping: [student8] => (item=student7) 
+skipping: [student9] => (item=student6) 
+ok: [student6] => (item=student9) => {
+    "msg": "10.10.10.106 is trying to connect to 10.10.10.109\n106 109\n"
+}
+skipping: [student10] => (item=student8) 
+skipping: [student8] => (item=student8) 
+skipping: [student9] => (item=student7) 
+ok: [student7] => (item=student10) => {
+    "msg": "10.10.10.107 is trying to connect to 10.10.10.110\n107 110\n"
+}
+skipping: [student10] => (item=student9) 
+skipping: [student10] => (item=student10) 
+skipping: [student9] => (item=student8) 
+ok: [student6] => (item=student10) => {
+    "msg": "10.10.10.106 is trying to connect to 10.10.10.110\n106 110\n"
+}
+skipping: [student9] => (item=student9) 
+ok: [student8] => (item=student9) => {
+    "msg": "10.10.10.108 is trying to connect to 10.10.10.109\n108 109\n"
+}
+ok: [student7] => (item=student11) => {
+    "msg": "10.10.10.107 is trying to connect to 10.10.10.111\n107 111\n"
+}
+ok: [student10] => (item=student11) => {
+    "msg": "10.10.10.110 is trying to connect to 10.10.10.111\n110 111\n"
+}
+ok: [student6] => (item=student11) => {
+    "msg": "10.10.10.106 is trying to connect to 10.10.10.111\n106 111\n"
+}
+ok: [student9] => (item=student10) => {
+    "msg": "10.10.10.109 is trying to connect to 10.10.10.110\n109 110\n"
+}
+ok: [student7] => (item=student12) => {
+    "msg": "10.10.10.107 is trying to connect to 10.10.10.112\n107 112\n"
+}
+ok: [student10] => (item=student12) => {
+    "msg": "10.10.10.110 is trying to connect to 10.10.10.112\n110 112\n"
+}
+ok: [student8] => (item=student10) => {
+    "msg": "10.10.10.108 is trying to connect to 10.10.10.110\n108 110\n"
+}
+ok: [student9] => (item=student11) => {
+    "msg": "10.10.10.109 is trying to connect to 10.10.10.111\n109 111\n"
+}
+ok: [student6] => (item=student12) => {
+    "msg": "10.10.10.106 is trying to connect to 10.10.10.112\n106 112\n"
+}
+ok: [student8] => (item=student11) => {
+    "msg": "10.10.10.108 is trying to connect to 10.10.10.111\n108 111\n"
+}
+ok: [student9] => (item=student12) => {
+    "msg": "10.10.10.109 is trying to connect to 10.10.10.112\n109 112\n"
+}
+ok: [student8] => (item=student12) => {
+    "msg": "10.10.10.108 is trying to connect to 10.10.10.112\n108 112\n"
+}
+skipping: [student11] => (item=student1) 
+skipping: [student11] => (item=student2) 
+skipping: [student12] => (item=student1) 
+skipping: [student11] => (item=student3) 
+skipping: [student12] => (item=student2) 
+skipping: [student11] => (item=student4) 
+skipping: [student12] => (item=student3) 
+skipping: [student11] => (item=student5) 
+skipping: [student12] => (item=student4) 
+skipping: [student11] => (item=student6) 
+skipping: [student12] => (item=student5) 
+skipping: [student11] => (item=student7) 
+skipping: [student12] => (item=student6) 
+skipping: [student11] => (item=student8) 
+skipping: [student12] => (item=student7) 
+skipping: [student11] => (item=student9) 
+skipping: [student12] => (item=student8) 
+skipping: [student11] => (item=student10) 
+skipping: [student11] => (item=student11) 
+skipping: [student12] => (item=student9) 
+skipping: [student12] => (item=student10) 
+ok: [student11] => (item=student12) => {
+    "msg": "10.10.10.111 is trying to connect to 10.10.10.112\n111 112\n"
+}
+skipping: [student12] => (item=student11) 
+skipping: [student12] => (item=student12) 
+skipping: [student12]

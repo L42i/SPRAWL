@@ -1,0 +1,30 @@
+---
+- name: mesh
+  hosts: myservers
+  gather_facts: false
+  tasks:
+    - name: Launch Clients
+      debug:
+        msg: | 
+          jacktrip -n 1 -C {{ hostvars[groups['myservers'][index]].ansible_host }} -J {{ hostvars[groups['myservers'][index]].inventory_hostname}} -K {{ inventory_hostname }} -B {{ base_port + index }}
+
+        #{{groups['myservers'][index]}}
+        #{{ansible_host}} is trying to connect to {{ hostvars[groups['myservers'][index]].ansible_host }}
+        #{{ ansible_host.split('.')[-1] | int }} {{ (hostvars[groups['myservers'][index]].ansible_host).split('.')[-1] | int }}
+          
+      loop: "{{groups['myservers']}}"
+      loop_control:
+        index_var: index
+      when: 
+        - ansible_host != hostvars[groups['myservers'][index]].ansible_host 
+        - ansible_host.split('.')[-1] | int < (hostvars[groups['myservers'][index]].ansible_host).split('.')[-1] | int
+      #"{{ ansible_play_hosts | difference([inventory_hostname]) }}"
+
+              
+      
+
+
+  
+    
+  vars:
+    base_port: 4464
