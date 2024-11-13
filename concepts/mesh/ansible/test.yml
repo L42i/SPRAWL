@@ -6,7 +6,10 @@
     - name: Launch Clients
       debug:
         msg: | 
-          jacktrip -n 1 -C {{ hostvars[groups['myservers'][index]].ansible_host }} -J {{ hostvars[groups['myservers'][index]].inventory_hostname}} -K {{ inventory_hostname }} -B {{ base_port + index }}
+          jacktrip -n 1 -C {{  hostvars[groups['myservers'][index]].ansible_host }} -J {{ item}} -K {{ inventory_hostname }} -B {{ base_port + index }}
+         
+        #{{ansible_host}} is trying to connect to {{ hostvars[groups['myservers'][index]].ansible_host }}
+        #jacktrip -n 1 -C {{ hostvars[groups['myservers'][index]].ansible_host }} -J {{ hostvars[groups['myservers'][index]].inventory_hostname}} -K {{ inventory_hostname }} -B {{ base_port + index }}
          #{{ansible_host}} is trying to connect to {{ hostvars[groups['myservers'][index]].ansible_host }}
       
         #{{groups['myservers'][index]}}
@@ -17,14 +20,23 @@
         index_var: index
       when: 
         - ansible_host != hostvars[groups['myservers'][index]].ansible_host 
-        - ansible_host.split('.')[-1] | int < (hostvars[groups['myservers'][index]].ansible_host).split('.')[-1] | int
+        - index < groups['myservers'].index(inventory_hostname)
       #"{{ ansible_play_hosts | difference([inventory_hostname]) }}"
 
               
       
 
 
-  
+    - name: "Launch lots of JackTrip clients"
+      # create connection to server with the name
+      debug: 
+        msg: |
+          jacktrip -n 1 -C {{ hostvars[groups['myservers'][groups['myservers'].index(item)]].ansible_host }} -K {{ inventory_hostname }} -J {{ item }} -B {{ base_port + index }}
+      loop: "{{ groups['myservers'] | difference([inventory_hostname]) }}"
+      loop_control:
+        index_var: index
+      when: "{{index < groups['myservers'].index(inventory_hostname) }}"
+
     
   vars:
     base_port: 4464
