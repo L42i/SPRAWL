@@ -7,10 +7,10 @@
       debug:
         msg: | 
           jacktrip -n 1 -C {{ hostvars[groups['myservers'][index]].ansible_host }} -J {{ hostvars[groups['myservers'][index]].inventory_hostname}} -K {{ inventory_hostname }} -B {{ base_port + index }}
-
+         #{{ansible_host}} is trying to connect to {{ hostvars[groups['myservers'][index]].ansible_host }}
+      
         #{{groups['myservers'][index]}}
-        #{{ansible_host}} is trying to connect to {{ hostvars[groups['myservers'][index]].ansible_host }}
-        #{{ ansible_host.split('.')[-1] | int }} {{ (hostvars[groups['myservers'][index]].ansible_host).split('.')[-1] | int }}
+         #{{ ansible_host.split('.')[-1] | int }} {{ (hostvars[groups['myservers'][index]].ansible_host).split('.')[-1] | int }}
           
       loop: "{{groups['myservers']}}"
       loop_control:
