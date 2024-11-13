@@ -1,6 +1,14 @@
 s.waitForBoot
 
 {
+var w = Window("Slider", Rect(128, 64, 1200, 800));
+
+var button = Button(w, Rect(400,50,200,200));
+
+var freqSlider = Slider(w, Rect(10,300,1000,100));
+var rangeSlider = Slider(w, Rect(10,500,1000,100));
+var durSlider = Slider(w, Rect(10,700,1000,100));
+
 SynthDef(\Wave, {
 	|out = 0.5, freq = 400, range = 200, dur = 2.1|
 
@@ -10,14 +18,6 @@ SynthDef(\Wave, {
 		LPF.ar(in: WhiteNoise.ar(out), freq: freqEnv) * ampEnv
     );
 }).send(s);
-
-var w = Window("Slider", Rect(128, 64, 1200, 800));
-
-var button = Button(w, Rect(400,50,200,200));
-
-var freqSlider = Slider(w, Rect(10,300,1000,100));
-var rangeSlider = Slider(w, Rect(10,500,1000,100));
-var durSlider = Slider(w, Rect(10,700,1000,100));
 
 freqSlider.action_({~wave_synth.set(\freq,
 	linlin(freqSlider.value.postln, 0, 1, 400, 2000))
