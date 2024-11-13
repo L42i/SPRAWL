@@ -30,7 +30,36 @@
       async: 2592000
       poll: 0
     
+    - name: start jacktrip
+      shell: |
+        jacktrip -S 
+      register: ps
+      async: 2592000
+      poll: 0
 
-    
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: /home/student/remote/
+        state: directory
+        owner: student
+        group: student
+        mode: '0755'
+
+        
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: ../meshMixer.scd
+        dest: /home/student/remote/meshMixer.scd
+        owner: student
+        group: student
+        mode: '0644'
+
+    - name: run sc script
+      shell: |
+        export DISPLAY=:0.0
+        sclang /home/student/remote/meshMixer.scd
+      async: 2592000
+      poll: 0
+
   vars:
-    base_port: 4464
+    base_port: meshMixer.scd4464
