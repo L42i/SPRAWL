@@ -1,0 +1,88 @@
+---
+- name: mesh
+  hosts: myservers
+  gather_facts: false
+  tasks:
+    - name: killAll
+      shell: |
+        killall -9 qjackctl
+        killall -9 jacktrip
+        killall -9 sclang
+        killall -9 scsynth
+        killall -9 aj-snapshot  
+        killall -9 jackd
+      register: ps
+      async: 2592000
+      poll: 0
+
+    - name: start jackd
+      shell: |
+        jackd -P 95 -a a -d alsa -d hw:Gen -r 48000 -p 128 -n 2  &
+        sleep 3
+      register: ps
+      async: 2592000
+      poll: 0
+
+    - name: start jacktrip
+      shell: |
+        jacktrip -S &
+        sleep 3
+      register: ps
+      async: 2592000
+      poll: 0
+    
+    - name: Launch Clients
+      shell: |
+          nohup jacktrip -n 1 -C {{  hostvars[groups['myservers'][index]].ansible_host }} -K {{ inventory_hostname }}  -J {{ item}} -B {{ base_port + index }} &
+          sleep 1
+        
+      loop: "{{groups['myservers']}}"
+      loop_control:
+        index_var: index
+      when: 
+        - ansible_host != hostvars[groups['myservers'][index]].ansible_host 
+        - index > groups['myservers'].index(inventory_hostname)
+
+    - name: Launch Clients
+      debug: 
+        msg:
+          nohup jacktrip -n 1 -C {{  hostvars[groups['myservers'][index]].ansible_host }} -K {{ inventory_hostname }}  -J {{ item}} -B {{ base_port + index }} &
+          
+        
+      loop: "{{groups['myservers']}}"
+      loop_control:
+        index_var: index
+      when: 
+        - ansible_host != hostvars[groups['myservers'][index]].ansible_host 
+        - index > groups['myservers'].index(inventory_hostname)
+
+
+    
+      #"{{ ansible_play_hosts | difference([inventory_hostname]) }}"
+
+  #   - name: Launch Clients
+  #     debug:
+  #       msg: | 
+  #         jacktrip -n 1 -C {{  hostvars[groups['myservers'][index]].ansible_host }} -J {{ item}} -K {{ inventory_hostname }} -B {{ base_port + index }}
+         
+  #       #{{ansible_host}} is trying to connect to {{ hostvars[groups['myservers'][index]].ansible_host }}
+  #       #jacktrip -n 1 -C {{ hostvars[groups['myservers'][index]].ansible_host }} -J {{ hostvars[groups['myservers'][index]].inventory_hostname}} -K {{ inventory_hostname }} -B {{ base_port + index }}
+  #        #{{ansible_host}} is trying to connect to {{ hostvars[groups['myservers'][index]].ansible_host }}
+      
+  #       #{{groups['myservers'][index]}}
+  #        #{{ ansible_host.split('.')[-1] | int }} {{ (hostvars[groups['myservers'][index]].ansible_host).split('.')[-1] | int }}
+          
+  #     loop: "{{groups['myservers']}}"
+  #     loop_control:
+  #       index_var: index
+  #     when: 
+  #       - ansible_host != hostvars[groups['myservers'][index]].ansible_host 
+  #       - index < groups['myservers'].index(inventory_hostname)
+  #     #"{{ ansible_play_hosts | difference([inventory_hostname]) }}"
+
+   
+
+  
+    
+  vars:
+    base_port: 4464
