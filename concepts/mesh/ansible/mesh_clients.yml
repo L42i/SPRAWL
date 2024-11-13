@@ -5,7 +5,7 @@
   tasks:
 
     - name: Launch Clients
-      shell: jacktrip -n 1 -C {{ansible_host}} -J {{ inventory_hostname }}_incoming -K {{ item }} -B {{ base_port + index }}
+      shell: jacktrip -n 1 -C {{item}}  -B {{ base_port + index }}
       async: 2592000
       poll: 0
       loop: "{{ ansible_play_hosts | difference([inventory_hostname]) }}"
