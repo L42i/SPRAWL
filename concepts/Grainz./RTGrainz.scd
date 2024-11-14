@@ -2,8 +2,12 @@
 
 // 5 second Buffer
 
+s.options.numOutputBusChannels = 12;
+s.options.numInputBusChannels = 1;
+
+
 (
-Routine({
+s.waitForBoot({
 
 b = Buffer.alloc(s, s.sampleRate * 5, 1);
 
@@ -135,7 +139,7 @@ b.zero;
 		[
 			\amp, n.linlin(0,4,-3,-20).dbamp, // linearly mapping the amplitude based on read pointer position
 			\buf, b,
-			\out, 0,   // NEED TO FIGURE THIS OUT HAVENT BEEN APLE TO TEST WITH THE MESH. SET TO N?
+			\out, n,   // NEED TO FIGURE THIS OUT HAVENT BEEN APLE TO TEST WITH THE MESH. SET TO N?
 			\atk, 1,
 			\rel, 1,
 			\gate, 1,
@@ -156,6 +160,6 @@ b.zero;
 		~granGrp
 	);
 });
-	
+
 });
 )
