@@ -1,3 +1,5 @@
+s.options.numOutputBusChannels = 6;
+
 s.waitForBoot {
     var window, vocoderSlider, reverbSlider, vocoderAmount, reverbAmount, vocoderSynth;
     var sliderWidth = 120;
@@ -6,28 +8,47 @@ s.waitForBoot {
     var sliderY = 100;
     window = Window("Vocoder and Reverb Control", Rect(0, 0, Window.screenBounds.width, Window.screenBounds.height));
 
-    // Combined Vocoder and Reverb SynthDef
-    SynthDef(\vocoderReverbEffect, { |inBus = 1, outBus = 0, vocoderAmount = 0, reverbAmount = 0|
+    // Combined Vocoder and Reverb SynthDef with 6-band output and harmonics
+    SynthDef(\vocoderReverbEffect, { |inBus = 0, outBus = 0, vocoderAmount = 0, reverbAmount = 0|
         var input, modulator, vocoder, dryVocoder, wetVocoder, vocoderOutput, reverbOutput;
+        var bands, freqs, detune, harmonics;
 
-        // Input from audio input 1
-        input = SoundIn.ar(inBus);
+        // Input from audio input (set to inBus 0 by default)
+        input = SoundIn.ar(inBus) * 0.3;  // Reduce input gain if too strong
 
-        // Modulator signal for the vocoder (e.g., a sine wave or noise)
-        modulator = WhiteNoise.ar * EnvGen.kr(Env.perc(0.01, 0.3), Impulse.kr(1));
+        // Modulator signal for the vocoder (richer noise and sine wave modulation for a more dynamic effect)
+        modulator = Mix.fill(6, { |i| SinOsc.ar(150 + (i * 25)) * 0.15 }) + (WhiteNoise.ar * 0.05);
 
-        // Vocoder processing
-        vocoder = PV_MagMul(FFT(LocalBuf(512), input), FFT(LocalBuf(512), modulator));
+        // Vocoder processing with smaller buffer size for quicker response
+        vocoder = PV_MagMul(FFT(LocalBuf(256), input), FFT(LocalBuf(256), modulator));
 
         // Blend between dry (unprocessed) and wet (processed) vocoder signals
         dryVocoder = input;
         wetVocoder = IFFT(vocoder);
         vocoderOutput = XFade2.ar(dryVocoder, wetVocoder, vocoderAmount * 2 - 1);
 
-        reverbOutput = FreeVerb.ar(vocoderOutput, mix: reverbAmount);
+        // Define frequency bands (low to high) with a touch of detuning for richness
+        freqs = [100, 300, 500, 1000, 3000, 5000];
+        detune = [1, 0.995, 1.01, 1.10, 0.48, 1.30]; // Slight detune factors for each band
 
-        // Output reverb to both left and right channels
-        Out.ar(outBus, reverbOutput.dup);
+        // Apply bandpass filters to split vocoder output into 6 bands, add harmonics, and detune each slightly
+        bands = freqs.collect { |freq, i|
+            var fundamental = BPF.ar(vocoderOutput * detune[i], freq, 0.15);
+            // Add harmonics by mixing in additional sine waves at harmonic intervals
+            harmonics = Mix([
+                fundamental,
+                BPF.ar(vocoderOutput * detune[i], freq * 2, 0.1),   // First harmonic (octave)
+                BPF.ar(vocoderOutput * detune[i], freq * 3, 0.1),   // Second harmonic (fifth above octave)
+                BPF.ar(vocoderOutput * detune[i], freq * 4, 0.1)    // Third harmonic (two octaves)
+            ]);
+            harmonics;
+        };
+
+        // Add enhanced reverb and stereo widening to each band and route to separate outputs
+        bands.do { |band, i|
+            var pannedBand = Pan2.ar(band, LFNoise1.kr(0.1).range(-1, 1)); // Slow panning for stereo width
+            Out.ar(outBus + i, FreeVerb2.ar(pannedBand, pannedBand, mix: reverbAmount, room: 0.9, damp: 0.5));
+        };
     }).add;
 
     s.sync; // Wait for the server to sync the SynthDefs
@@ -48,7 +69,10 @@ s.waitForBoot {
             reverbAmount = sl.value;
             vocoderSynth.set(\reverbAmount, reverbAmount);
         });
+
     vocoderSlider.value = 0; // Start at 0% vocoder amount
     reverbSlider.value = 0;  // Start at 0% reverb amount
     window.front;
+
+	s.meter;
 };
