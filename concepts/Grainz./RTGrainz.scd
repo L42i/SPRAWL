@@ -2,8 +2,8 @@
 
 // 5 second Buffer
 
-s.boot;
-s.sync;
+(
+Routine({
 
 b = Buffer.alloc(s, s.sampleRate * 5, 1);
 
@@ -156,11 +156,6 @@ b.zero;
 		~granGrp
 	);
 });
-
-// Testing code
-//~g.do({ arg n; n.set(\gate, 0) });
-
-
-
-
-
+	
+});
+)
