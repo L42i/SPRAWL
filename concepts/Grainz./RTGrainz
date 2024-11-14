@@ -2,7 +2,12 @@
 
 // 5 second Buffer
 
+s.boot;
+s.sync;
+
 b = Buffer.alloc(s, s.sampleRate * 5, 1);
+
+s.sync;
 
 // mic for recording and pointer to point which sample to record from
 
@@ -154,8 +159,6 @@ b.zero;
 
 // Testing code
 //~g.do({ arg n; n.set(\gate, 0) });
-
-
 
 
 
