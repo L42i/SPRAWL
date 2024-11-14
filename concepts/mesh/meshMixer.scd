@@ -52,15 +52,18 @@ s.waitForBoot({
 	~gain_BUS[0].setAll(2);
 	~gain_BUS[0].setAt(0,1);
 
+
 	OSCdef('/set_pitch',{ arg msg;
 		~mixer.do({arg e; e.set(\pitch, msg[1])});
 		~mixer[0].set(\pitch, 1);
 	},'/set_pitch');
 
+
 	OSCdef('/set_time',{ arg msg;
 		~mixer.do({arg e; e.set(\time, msg[1])});
 		~mixer[0].set(\time, 0);
 	},'/set_time');
+
 
 	OSCdef('/set_network_gain',{ arg msg;
 

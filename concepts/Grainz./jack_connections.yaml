@@ -27,6 +27,12 @@
         index_var: index
       when: "{{index != groups['myservers'].index(inventory_hostname)}}"
         
+    - name: "Connect JackTrip more"
+      shell: jack_connect {{item}}:receive_1 SuperCollider:in_2
+      loop: "{{ groups['myservers'] }}"
+      loop_control:
+        index_var: index
+      when: "{{index != groups['myservers'].index(inventory_hostname)}}"
  
 
   vars:

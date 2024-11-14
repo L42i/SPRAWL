@@ -3,7 +3,7 @@
 // 5 second Buffer
 
 s.options.numOutputBusChannels = 12;
-s.options.numInputBusChannels = 1;
+s.options.numInputBusChannels = 2;
 
 
 (
@@ -160,6 +160,10 @@ b.zero;
 		~granGrp
 	);
 });
+
+	//~forwarder = {Out.ar(0,0.2*SoundIn.ar(Array.fill(12,{1})))}.play;
+
+	s.meter;
 
 });
 )
