@@ -161,7 +161,7 @@ b.zero;
 	);
 });
 
-	//~forwarder = {Out.ar(0,0.2*SoundIn.ar(Array.fill(12,{1})))}.play;
+	~forwarder = {Out.ar(0,0.08*SoundIn.ar(Array.fill(12,{1})))}.play;
 
 	s.meter;
 
