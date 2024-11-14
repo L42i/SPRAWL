@@ -111,36 +111,8 @@ Synth(\mic, [\in, 0, \out, ~micBus], ~micGrp);
 Synth(\ptr, [\buf, b, \out, ~ptrBus], ~ptrGrp);
 Synth(\rec, [\ptrIn, ~ptrBus, \micIn, ~micBus, \buf, b], ~recGrp);
 )
-(
-b.zero; // Clear the buffer each time we start up the granulator
 
-~g = Synth(\gran,
-	[
-		\amp, 0.5,
-		\buf, b,
-		\out, 0,
-		\atk, 1,
-		\rel, 1,
-		\gate, 1,
-		\sync, 1,
-		\dens, 40,
-		\baseDur, 0.05,
-		\durRand, 1,
-		\rate, 1,
-		\rateRand, 1,
-		\pan, 0,
-		\panRand, 0,
-		\grainEnv, -1,
-		\ptrBus, ~ptrBus,
-		\ptrSampleDelay, s.sampleRate/3,
-		\ptrRandSamples, s.sampleRate/6,
-		\minPtrDelay, 1000;
-	],
-	~granGrp
-);
-)
-
-// Adding about 5 grain read pointers behind the write pointer
+// Adding 12 grain read pointers behind the write pointer
 (
 b.zero;
 ~g = 12.collect({
@@ -149,7 +121,7 @@ b.zero;
 		[
 			\amp, n.linlin(0,11,-3,-20).dbamp, // linearly mapping the amplitude based on read pointer position
 			\buf, b,
-			\out, 0,   // NEED TO FIGURE THIS OUT HAVENT BEEN APLE TO TEST WITH THE MESH. SET TO N?
+			\out, n,   // NEED TO FIGURE THIS OUT HAVENT BEEN APLE TO TEST WITH THE MESH. SET TO N?
 			\atk, 1,
 			\rel, 1,
 			\gate, 1,
