@@ -26,6 +26,7 @@
     shell: jacktrip -S
     async: 2592000 # run for 1 month
     poll: 0
+
   - name: Launch JackTrip Clients
     # Connect to the item being iterated in the loop as a client
     shell: jacktrip -n 1 -C {{ hostvars[item]['ansible_host'] }} -K {{ inventory_hostname }} -J {{ item }} -B {{ base_port + index }}
@@ -46,17 +47,19 @@
       mode: '0755'
     async: 2592000
     poll: 0
+
   - name: Copy file with owner and permissions
     ansible.builtin.copy:
-      src: ../meshMixer.scd
-      dest: /home/student/remote/meshMixer.scd
+      src: RTGrainz.scd
+      dest: /home/student/remote/RTGrainz.scd
       owner: student
       group: student
       mode: '0644'
+
   - name: run sc script
     shell: |
       export DISPLAY=:0.0
-      sclang /home/student/remote/meshMixer.scd
+      sclang /home/student/remote/RTGrainz.scd
     async: 2592000
     poll: 0
 
