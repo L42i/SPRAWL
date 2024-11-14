@@ -2,6 +2,9 @@
 
 // 5 second Buffer
 
+s.boot;
+s.sync;
+
 b = Buffer.alloc(s, s.sampleRate * 5, 1);
 
 s.sync;
