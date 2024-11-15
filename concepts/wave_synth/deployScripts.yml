@@ -1,0 +1,9 @@
+---
+- hosts: myservers
+  become: true
+  tasks:
+    - name: Copy start super collider
+      copy:
+        src: ./ringControl.scd
+        dest: /home/student
+        mode: '0755'
