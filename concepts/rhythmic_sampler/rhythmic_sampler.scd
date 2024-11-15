@@ -8,6 +8,7 @@ s.waitForBoot
 	w;
 	~b1;
 	~b2;
+	~ttb;
 
 	// Load a default pattern
 	~pattern = "wr";
@@ -97,9 +98,9 @@ s.waitForBoot
 		var temp_pattern = "";
 		var numofnotes = 0;
 
-		// Loop through each checkbox
-		~cba.do({ |cb, i|
-			if (cb.value == true, { // If the current checkbox is checked...
+		// Loop through each button
+		~tba.do({ |cb, i|
+			if (cb.value == 1, { // If the current checkbox is checked...
 				if (temp_pattern == "", { // If the pattern does not have any data in it yet...
 					if (i == 0, { // If this is the first checkbox...
 						tempcount = tempcount + 0.25;
@@ -170,15 +171,21 @@ s.waitForBoot
 	.states_([["Stop"]])
 	.action_({ ~g1.stop });
 
-	// Make the array of checkboxes
-	~cba = Array.fill(16, { |i|
-		var checkbox;
-		checkbox = CheckBox(w, Rect(100 + (i * 20), 300, 50, 50))
-		.valueAction_(false)
-		.action_({ ~parsePattern.() });
-	});
+	// Create array of buttons to represent the rhythmic pattern
+	~tba = 16.collect({
+		arg n;
+
+		b = Button(w, Rect(100 + (n * 60), 300, 60, 60))
+        .states_([
+            ["", Color.grey, Color.white],
+            ["X", Color.white, Color.grey]
+        ])
+        .action_({ arg butt;
+            ~parsePattern.();
+		});
+});
 
 	// Show the GUI and make it full screen!
-	//w.fullScreen;
+	w.fullScreen;
 	w.front;
 };
