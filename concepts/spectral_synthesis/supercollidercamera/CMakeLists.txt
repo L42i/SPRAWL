@@ -65,7 +65,6 @@ endif()
 # Begin target Camera
 
 set(Camera_cpp_files
-    plugins/Camera/Camera.hpp
     plugins/Camera/Camera.cpp
 )
 set(Camera_sc_files
