@@ -50,5 +50,6 @@ button.mouseDownAction = {~wave_synth = Synth(\Wave,
 	 \range, linlin(rangeSlider.value.postln, 0, 1, 200, 600)]
 )};
 
+w.fullscreen;
 w.front;
 };
