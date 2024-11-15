@@ -9,15 +9,15 @@ var x = { | gain=0.9, delay=0.5| var input = SoundIn.ar(0);
 
 var w = Window("Slider", Rect(128, 64, 1200, 800));
 
-var button = Button(w, Rect(400,50,200,200));
+var button = Button(w, Rect(400,50,100,100));
 
-var freqSlider = Slider(w, Rect(150,300,1000,100));
-var rangeSlider = Slider(w, Rect(150,500,1000,100));
-var durSlider = Slider(w, Rect(150,700,1000,100));
+var freqSlider = Slider(w, Rect(150,300,500,50));
+var rangeSlider = Slider(w, Rect(150,400,500,50));
+var durSlider = Slider(w, Rect(150,500,500,50));
 
-var freqText = TextField(w, Rect(10, 300, 100, 100));
-var rangeText = TextField(w, Rect(10, 500, 100, 100));
-var durText = TextField(w, Rect(10, 700, 100, 100));
+var freqText = TextField(w, Rect(10, 300, 50, 50));
+var rangeText = TextField(w, Rect(10, 400, 50, 50));
+var durText = TextField(w, Rect(10, 500, 50, 50));
 var buttonText = TextField(w, Rect(250, 50, 100, 100));
 freqText.string = "Start Pitch";
 rangeText.string = "Wave Range";
