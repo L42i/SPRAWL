@@ -11,9 +11,9 @@ var w = Window("Slider", Rect(128, 64, 1200, 800));
 
 var button = Button(w, Rect(400,50,100,100));
 
-var freqSlider = Slider(w, Rect(150,300,500,50));
-var rangeSlider = Slider(w, Rect(150,400,500,50));
-var durSlider = Slider(w, Rect(150,500,500,50));
+var freqSlider = Slider(w, Rect(100,300,600,50));
+var rangeSlider = Slider(w, Rect(100,400,600,50));
+var durSlider = Slider(w, Rect(100,500,600,50));
 
 var freqText = TextField(w, Rect(10, 300, 50, 50));
 var rangeText = TextField(w, Rect(10, 400, 50, 50));
