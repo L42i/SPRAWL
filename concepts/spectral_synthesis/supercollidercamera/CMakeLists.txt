@@ -85,7 +85,15 @@ sc_add_server_plugin(
 
 # End target Camera
 ####################################################################################################
+# Third-party libraries
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(OpenCV REQUIRED opencv4)
+target_include_directories(Camera_supernova PRIVATE ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(Camera_supernova ${OpenCV_LIBRARIES})
+target_include_directories(Camera_scsynth PRIVATE ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(Camera_scsynth ${OpenCV_LIBRARIES})
 
+set(CMAKE_VERBOSE_MAKEFILE ON)
 ####################################################################################################
 # END PLUGIN TARGET DEFINITION
 ####################################################################################################
