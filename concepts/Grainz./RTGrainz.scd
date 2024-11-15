@@ -137,9 +137,9 @@ b.zero;
 	arg n; // is the argument of pointers
 	Synth(\gran,
 		[
-			\amp, n.linlin(0,4,-3,-20).dbamp, // linearly mapping the amplitude based on read pointer position
+			\amp, n.linlin(0,11,-3,-20).dbamp, // linearly mapping the amplitude based on read pointer position
 			\buf, b,
-			\out, n,   // NEED TO FIGURE THIS OUT HAVENT BEEN APLE TO TEST WITH THE MESH. SET TO N?
+			\out, n,   
 			\atk, 1,
 			\rel, 1,
 			\gate, 1,
@@ -148,12 +148,12 @@ b.zero;
 			\baseDur, 0.08,
 			\durRand, 1.5,
 			\rate, 1,
-			\rateRand, 2.midiratio,
+			\rateRand, 1,
 			\pan, 0,
 			\panRand, 0.5,
 			\grainEnv, -1,
 			\ptrBus, ~ptrBus,
-			\ptrSampleDelay, n.linlin(0,4,20000,s.sampleRate * 2),
+			\ptrSampleDelay, n.linlin(0,11,20000,s.sampleRate * 2),
 			\ptrRandSamples, 10000,
 			\minPtrDelay, 1000;
 		],
@@ -161,9 +161,23 @@ b.zero;
 	);
 });
 
-	~forwarder = {Out.ar(0,0.08*SoundIn.ar(Array.fill(12,{1})))}.play;
+~forwarder = {Out.ar(0,0.08*SoundIn.ar(Array.fill(12,{1})))}.play;
 
-	s.meter;
+s.meter;
+
+// Slider to control playback rate
+
+w = Window("GUI", Rect(500,500,300,200)).front.alwaysOnTop_(true);
+
+~slider = Slider(w,100,100,50,50)
+.background_(Color.magenta)
+.action_({
+	arg sliderVal;
+	var randVal;
+	randVal = sliderVal.value.linlin(0,1,1,5.midiratio).postln;
+	~g.do({ arg n; n.set(\rateRand, randVal) });
+});
+
 
 });
 )
