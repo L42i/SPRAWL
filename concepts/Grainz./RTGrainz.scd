@@ -163,13 +163,13 @@ b.zero;
 
 ~forwarder = {Out.ar(0,0.08*SoundIn.ar(Array.fill(12,{1})))}.play;
 
-s.meter;
+// s.meter;
 
 // Slider to control playback rate
 
-w = Window("GUI", Rect(500,500,300,200)).front.alwaysOnTop_(true);
+w = Window("GUI", Rect(50,50,800,800)).front.alwaysOnTop_(true);
 
-~slider = Slider(w,100,100,50,50)
+~slider = Slider(w,Rect(100,100,500,150))
 .background_(Color.magenta)
 .action_({
 	arg sliderVal;
@@ -178,6 +178,7 @@ w = Window("GUI", Rect(500,500,300,200)).front.alwaysOnTop_(true);
 	~g.do({ arg n; n.set(\rateRand, randVal) });
 });
 
+w.fullScreen;
 
 });
 )
