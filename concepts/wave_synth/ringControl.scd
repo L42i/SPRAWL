@@ -22,11 +22,10 @@ var durSlider = Slider(w, Rect(150,700,1000,100));
 var freqText = TextField(w, Rect(10, 300, 100, 100));
 var rangeText = TextField(w, Rect(10, 500, 100, 100));
 var durText = TextField(w, Rect(10, 700, 100, 100));
+var buttonText = TextField(w, Rect(250, 50, 100, 100));
 freqText.string = "Start Pitch";
 rangeText.string = "Wave Range";
 durText.string = "Wave Duration";
-
-var buttonText = TextField(w, Rect(250, 50, 200, 200));
 buttonText.string = "Play a Wave";
 
 SynthDef(\Wave, {
