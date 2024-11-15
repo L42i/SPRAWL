@@ -20,6 +20,12 @@
         src: ./ringControl.scd
         dest: /home/student
         mode: '0755'
+
+    - name: Copy start super collider
+      copy:
+        src: ../../Lights/audio_reactivity.scd
+        dest: /home/student
+        mode: '0755'
       
     - name: start jackd
       shell: |
@@ -39,10 +45,9 @@
 
     - name: connect clients
       shell: |
-        nohup jacktrip -D -C {{ hostvars[groups['myservers'][(groups['myservers'].index(inventory_hostname) + 1) % groups['myservers'] | length]].ansible_host }} -J {{ groups['myservers'][(groups['myservers'].index(inventory_hostname) + 1) % groups['myservers'] | length] }} -K {{ inventory_hostname }}  > jacktripConnect_log.txt 2>&1 &
+          nohup jacktrip -D -C {{ hostvars[groups['myservers'][(groups['myservers'].index(inventory_hostname) + 1) % groups['myservers'] | length]].ansible_host }} -J {{ groups['myservers'][(groups['myservers'].index(inventory_hostname) + 1) % groups['myservers'] | length] }} -K {{ inventory_hostname }}  > jacktripConnect_log.txt 2>&1 &
+      # nohup jacktrip -D -C {{ hostvars[groups['myservers'][(groups['myservers'].index(inventory_hostname) + 1) % groups['myservers'] | length]].ansible_host }} -J {{ groups['myservers'][(groups['myservers'].index(inventory_hostname) + 1) % groups['myservers'] | length] }} -K {{ inventory_hostname }}  > jacktripConnect_log.txt 2>&1 &
       register: ps
-      async: 2592000
-      poll: 0
 
     - name: run sc script
       shell: |
@@ -52,16 +57,15 @@
       async: 2592000
       poll: 0
 
+    - name: run 2nd sc script
+      shell: |
+        export DISPLAY=:0.0
+        sclang audio_reactivity.scd
+      register: ps
+      async: 2592000
+      poll: 0
 
-
-
-
-    - name: print
-      debug:
-        msg: | 
-         jacktrip -C {{ hostvars[groups['myservers'][(groups['myservers'].index(inventory_hostname) + 1) % groups['myservers'] | length]].ansible_host }} -J {{ groups['myservers'][(groups['myservers'].index(inventory_hostname) + 1) % groups['myservers'] | length] }} -K {{ inventory_hostname }} 
-
-
+    
         
          
       

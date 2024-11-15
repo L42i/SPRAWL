@@ -19,6 +19,6 @@ slider.action_({|sl|
 
 });
 
-w.fullScreen;
-//w.front;
+//w.fullScreen;
+w.front;
 };
