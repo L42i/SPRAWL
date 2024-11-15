@@ -15,10 +15,6 @@ var freqSlider = Slider(w, Rect(150,300,1000,100));
 var rangeSlider = Slider(w, Rect(150,500,1000,100));
 var durSlider = Slider(w, Rect(150,700,1000,100));
 
-var freqSlider = Slider(w, Rect(150,300,1000,100));
-var rangeSlider = Slider(w, Rect(150,500,1000,100));
-var durSlider = Slider(w, Rect(150,700,1000,100));
-
 var freqText = TextField(w, Rect(10, 300, 100, 100));
 var rangeText = TextField(w, Rect(10, 500, 100, 100));
 var durText = TextField(w, Rect(10, 700, 100, 100));
