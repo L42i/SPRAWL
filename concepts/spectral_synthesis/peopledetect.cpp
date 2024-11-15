@@ -50,10 +50,6 @@ public:
     }
 };
 
-static const string keys = "{ help h   |   | print help message }"
-                           "{ camera c | 0 | capture video from camera (device index starting from 0) }"
-                           "{ video v  |   | use video as input }";
-
 int main()
 {
     VideoCapture cap(0);
