@@ -77,10 +77,19 @@ private:
         }
     }
 };
+
+// Plugin Commands
+void CameraCmd_on(World* inWorld, void* inUserData, struct sc_msg_iter* args, void* replyAddr)
+{
+    CameraData* cameraData = (CameraData*)inUserData;
+    cameraData->cap = cv::VideoCapture{0};
+}
 } // namespace SuperColliderCamera
 
 PluginLoad(CameraUGens) {
     // Plugin magic
     ft = inTable;
     registerUnit<SuperColliderCamera::Camera>(ft, "Camera", false);
+
+    DefinePlugInCmd("on", SuperColliderCamera::CameraCmd_on, (void*)&SuperColliderCamera::gCameraData);
 }
