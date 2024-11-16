@@ -6,6 +6,9 @@ Camera : UGen {
 	*on {
 		Server.default.sendMsg(\cmd, \on);
 	}
+	*off {
+		Server.default.sendMsg(\cmd, \off);
+	}
 	checkInputs {
 		/* TODO */
 		^this.checkValidInputs;
