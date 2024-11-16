@@ -82,7 +82,7 @@ private:
 void CameraCmd_on(World* inWorld, void* inUserData, struct sc_msg_iter* args, void* replyAddr)
 {
     CameraData* cameraData = (CameraData*)inUserData;
-    cameraData->cap = cv::VideoCapture{0};
+    cameraData->cap.open(0);
 }
 void CameraCmd_off(World* inWorld, void* inUserData, struct sc_msg_iter* args, void* replyAddr)
 {
