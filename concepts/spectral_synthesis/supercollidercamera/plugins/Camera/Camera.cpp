@@ -11,6 +11,12 @@
 static InterfaceTable* ft;
 
 namespace SuperColliderCamera {
+struct CameraData {
+    cv::VideoCapture cap;
+};
+
+CameraData gCameraData;
+
 class Detector
 {
     enum Mode { Default, Daimler } m;
