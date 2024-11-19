@@ -1,4 +1,5 @@
-(
+s.options.memSize = 32*8192;
+
 s.waitForBoot({
     // Variable declarations
     var w, stepIndex, delayTime;
@@ -44,15 +45,15 @@ s.waitForBoot({
     };
 
     // Load buffers
-    ~buffers[\kick] = Buffer.read(s, "/Users/teairis/Splice/sounds/packs/Drum Surplus/Drum_Surplus/One_Shots/Drum_One_Shots/SLS_DS_kick_groovy.wav");
-    ~buffers[\snare] = Buffer.read(s, "/Users/teairis/Splice/sounds/packs/Ice Cold - Trap & Hip Hop/Origin_Sound_-_Ice_Cold/Drum_Hits/Snare/OS_IC_Drizzle_Snare.wav");
-    ~buffers[\hihat] = Buffer.read(s, "/Users/teairis/Splice/sounds/packs/Malay Vol. 2 Sample Pack/MALAY_drums/MALAY_drum_one_shots/MALAY_hihats/MALAY_hihat_gated_02.wav");
+	~folderPath = PathName(thisProcess.nowExecutingPath).parentPath;
+	~buffers[\kick] = Buffer.read(s, ~folderPath +/+ "samples/SLS_DS_kick_groovy.wav");
+    ~buffers[\snare] = Buffer.read(s, ~folderPath +/+ "samples/OS_IC_Drizzle_Snare.wav");
+    ~buffers[\hihat] = Buffer.read(s, ~folderPath +/+ "samples/MALAY_hihat_gated_02.wav");
 
     // Initialize recorded buffers - NOW 5 SECONDS LONG
     ~buffers[\recorded1] = Buffer.alloc(s, s.sampleRate * 2, 1);
     ~buffers[\recorded2] = Buffer.alloc(s, s.sampleRate * 2, 1);
     ~buffers[\recorded3] = Buffer.alloc(s, s.sampleRate * 2, 1);
-
 
     s.sync;
 
@@ -435,4 +436,3 @@ s.waitForBoot({
         w.front;
     }.defer;
 });
-)
