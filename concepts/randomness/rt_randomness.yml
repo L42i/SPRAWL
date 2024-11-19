@@ -50,8 +50,8 @@
 
   - name: Copy file with owner and permissions
     ansible.builtin.copy:
-      src: Randomness.scd
-      dest: /home/student/remote/Randomness.scd
+      src: randomness.scd
+      dest: /home/student/remote/randomness.scd
       owner: student
       group: student
       mode: '0644'
@@ -59,7 +59,7 @@
   - name: run sc script
     shell: |
       export DISPLAY=:0.0
-      sclang /home/student/remote/Randomness.scd
+      sclang /home/student/remote/randomness.scd
     async: 2592000
     poll: 0
 

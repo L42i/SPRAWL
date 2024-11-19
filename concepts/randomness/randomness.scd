@@ -1,5 +1,5 @@
-s.options.numOutputBusChannels = 12;
-s.options.numInputBusChannels = 12;
+s.options.numOutputBusChannels = 0;
+s.options.numInputBusChannels = 2;
 
 
 s.waitForBoot({
@@ -165,5 +165,7 @@ StaticText.new(~synth2,Rect(0,180,100,20)).string_("Volume");
 // SynthCreation
 ~randomness = Synth("erie",[\out, 0]);
 	// ~randomness2 = Synth("erie",[\out, 1]);
+
+	s.meter;
 
 });
