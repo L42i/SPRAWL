@@ -1,0 +1,26 @@
+---
+- name: Start fully connected Jacktrip Mesh
+  hosts: myservers
+  gather_facts: false
+  tasks:
+  # Launch SuperCollider stuff
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: /home/student/remote/
+        state: directory
+        owner: student
+        group: student
+        mode: '0755'
+      async: 2592000
+      poll: 0
+
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: samples
+        dest: /home/student/remote
+        owner: student
+        group: student
+        mode: '0644'
+
+  vars:
+    base_port: 4464

@@ -18,8 +18,6 @@
 	NetAddr.new(~addresses[i], 57120);
 });
 
-
-
 ~aps.do({arg e,i; e.sendMsg(\set_network_gain,0)});
 ~aps.do({arg e,i; e.sendMsg(\set_network_gain,0.08)});
 
@@ -32,3 +30,27 @@
 ~aps.do({arg e,i; e.sendMsg(\set_time,2)});
 
 
+~window = Window("Mesh Remote",Rect(100,100,1600,900));
+~window.front;
+
+~slider_1 = Slider(~window,Rect(10,10,100,800));
+
+~slider_1.action({|sl|
+
+
+	~aps.do({arg e,i; e.sendMsg(\set_network_gain,sl.value*0.1)});
+
+
+});
+
+~xy_1 = Slider2D(~window,Rect(400,10,800,800));
+~xy_1.action_({|sl|
+
+	var time  = sl.x * 2;
+	var pitch = sl.y * 2;
+
+	~aps.do({arg e,i; e.sendMsg(\set_pitch,pitch)});
+	~aps.do({arg e,i; e.sendMsg(\set_time,time)});
+
+
+        });
