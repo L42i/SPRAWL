@@ -5,12 +5,13 @@
   tasks:
     - name: killAll
       shell: |
-        killall qjackctl
-        killall jacktrip
-        killall sclang
-        killall scsynth
-        killall aj-snapshot  
-        killall jackd
+        killall -9 qjackctl
+        killall -9 jacktrip
+        killall -9 sclang
+        killall -9 scsynth
+        killall -9 aj-snapshot  
+        killall -9 jackd
+        killall -9 scide
       register: ps
       async: 2592000
       poll: 0
@@ -51,9 +52,6 @@
       register: ps
       async: 2592000
       poll: 0
-
-
-
 
 
     - name: print
