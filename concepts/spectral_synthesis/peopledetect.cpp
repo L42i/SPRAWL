@@ -50,40 +50,9 @@ public:
     }
 };
 
-static const string keys = "{ help h   |   | print help message }"
-                           "{ camera c | 0 | capture video from camera (device index starting from 0) }"
-                           "{ video v  |   | use video as input }";
-
-int main(int argc, char** argv)
+int main()
 {
-    CommandLineParser parser(argc, argv, keys);
-    parser.about("This sample demonstrates the use of the HoG descriptor.");
-    if (parser.has("help"))
-    {
-        parser.printMessage();
-        return 0;
-    }
-    int camera = parser.get<int>("camera");
-    string file = parser.get<string>("video");
-    if (!parser.check())
-    {
-        parser.printErrors();
-        return 1;
-    }
-
-    VideoCapture cap;
-    if (file.empty())
-        cap.open(camera);
-    else
-    {
-        file = samples::findFileOrKeep(file);
-        cap.open(file);
-    }
-    if (!cap.isOpened())
-    {
-        cout << "Can not open video stream: '" << (file.empty() ? "<camera>" : file) << "'" << endl;
-        return 2;
-    }
+    VideoCapture cap(0);
 
     cout << "Press 'q' or <ESC> to quit." << endl;
     cout << "Press <space> to toggle between Default and Daimler detector" << endl;

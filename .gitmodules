@@ -1,0 +1,3 @@
+[submodule "concepts/spectral_synthesis/supercollider"]
+	path = concepts/spectral_synthesis/supercollider
+	url = git@github.com:supercollider/supercollider.git
