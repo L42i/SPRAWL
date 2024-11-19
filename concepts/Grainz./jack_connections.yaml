@@ -9,8 +9,8 @@
       shell: |
         jack_connect system:capture_1 SuperCollider:in_1
         jack_connect system:capture_2 SuperCollider:in_1
+        jack_connect SuperCollider:out_{{groups['myservers'].index(inventory_hostname)}} system:playback_1
 
-#        jack_connect system:capture_1 SuperCollider:in_{{groups['myservers'].index(inventory_hostname) +1}}
 #        jack_connect system:capture_2 SuperCollider:in_{{groups['myservers'].index(inventory_hostname) +1}}
 
     - name: "Connect JackTrip ins"
