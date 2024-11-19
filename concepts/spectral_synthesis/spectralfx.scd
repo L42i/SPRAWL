@@ -21,10 +21,10 @@ s.waitForBoot({
 		pitch = 1,
 		time = 1
 		|
-
-		var in   = SoundIn.ar(Array.fill(~n_channels,inbus));
+		var in, chain;
+		in   = SoundIn.ar(Array.fill(~n_channels,inbus));
 		chain = FFT(LocalBuf(16384), in);
-		var proc = PitchShift.ar(DelayC.ar(in,1, max(0,time*Rand.new(0.4,0.5))), 0.2, max(0.1, 1+(pitch*Rand.new(-0.1,0.1))) );
+		//var proc = PitchShift.ar(DelayC.ar(in,1, max(0,time*Rand.new(0.4,0.5))), 0.2, max(0.1, 1+(pitch*Rand.new(-0.1,0.1))) );
 
 		Out.ar(outbus, IFFT(chain)* In.kr(gainbus,~n_channels));
 
