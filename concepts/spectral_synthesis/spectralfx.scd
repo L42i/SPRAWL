@@ -23,11 +23,11 @@ s.waitForBoot({
 		|
 		var in, chain;
 		in   = SoundIn.ar(Array.fill(~n_channels,inbus));
-		chain = FFT(LocalBuf(16384), in);
-		//var proc = PitchShift.ar(DelayC.ar(in,1, max(0,time*Rand.new(0.4,0.5))), 0.2, max(0.1, 1+(pitch*Rand.new(-0.1,0.1))) );
-
+		chain = FFT(LocalBuf(2048.dup(~n_channels), 1), in);
+		chain = PV_BrickWall(chain, (((SinOsc.kr(0.1))/2)-0.4));
+		chain = PV_BinScramble(chain, MouseX.kr , 0.1, MouseY.kr > 0.5 );
+		chain = PV_RectComb(chain, 8, LFTri.kr(0.097, 0, 0.4, 0.5), LFTri.kr(0.24, 0, -0.5, 0.5));
 		Out.ar(outbus, IFFT(chain)* In.kr(gainbus,~n_channels));
-
 	}).send;
 
 	s.sync;
