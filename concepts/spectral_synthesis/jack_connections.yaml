@@ -9,30 +9,25 @@
       shell: |
         jack_connect system:capture_1 SuperCollider:in_1
         jack_connect system:capture_2 SuperCollider:in_1
+        jack_connect SuperCollider:out_1 system:playback_1
 
 #        jack_connect system:capture_1 SuperCollider:in_{{groups['myservers'].index(inventory_hostname) +1}}
 #        jack_connect system:capture_2 SuperCollider:in_{{groups['myservers'].index(inventory_hostname) +1}}
 
     - name: "Connect JackTrip ins"
-      shell: jack_connect SuperCollider:out_{{index+1}} {{item}}:send_1 
+      shell: jack_connect SuperCollider:out_{{index+2}} {{item}}:send_1 
       loop: "{{ groups['myservers'] }}"
       loop_control:
         index_var: index
       when: "{{index != groups['myservers'].index(inventory_hostname)}}"
 
     - name: "Connect JackTrip outs"
-      shell: jack_connect {{item}}:receive_1 system:playback_1
+      shell: jack_connect {{item}}:receive_1 SuperCollider:in_{{index+2}}
       loop: "{{ groups['myservers'] }}"
       loop_control:
         index_var: index
       when: "{{index != groups['myservers'].index(inventory_hostname)}}"
         
-    - name: "Connect JackTrip more"
-      shell: jack_connect {{item}}:receive_1 SuperCollider:in_2
-      loop: "{{ groups['myservers'] }}"
-      loop_control:
-        index_var: index
-      when: "{{index != groups['myservers'].index(inventory_hostname)}}"
  
 
   vars:
