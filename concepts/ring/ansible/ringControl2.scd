@@ -1,7 +1,10 @@
+s = Server(\quest_test, NetAddr("127.0.0.1", 57112));
+
+// server settings
+s.options.device = "secondControl";
+
 s.waitForBoot
 {
-
-
 
 var x = { | gain=0.9, delay=0.5| var input = SoundIn.ar(0);
 
@@ -13,14 +16,12 @@ var w = Window("Slider",Rect(128,64,800,480));
 
 var slider = Slider2D(w, Rect(10,10,555,555));
 
-slider.setXY(0.5,0.5);
-
 slider.action_({|sl|
         x.set(\gain,sl.y);
         x.set(\delay, sl.x);
 
 });
 
-w.fullScreen;
-//w.front;
+//w.fullScreen;
+w.front;
 };
