@@ -1,0 +1,13 @@
+
+
+
+GRAINZ + LIGHTS 
+
+
+ansible-playbook -k -i ../../config/evans_hosts.ini rt_grainz.yml
+ansible-playbook -k -i ../../config/evans_hosts.ini jack_connections.yaml
+
+SPECTRAL 
+
+ansible-playbook -k -i ../../config/evans_hosts.ini spectralfx.yml  
+ansible-playbook -k -i ../../config/evans_hosts.ini jack_connections.yml

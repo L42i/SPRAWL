@@ -56,12 +56,30 @@
       group: student
       mode: '0644'
 
+  
+  - name: Copy start super collider
+    copy:
+      src: ../Lights/audio_reactivity.scd
+      dest: /home/student
+      mode: '0755'
+      
+
   - name: run sc script
     shell: |
       export DISPLAY=:0.0
       sclang /home/student/remote/RTGrainz.scd
     async: 2592000
     poll: 0
+
+
+  - name: run 2nd sc script
+    shell: |
+      export DISPLAY=:0.0
+      sclang audio_reactivity.scd
+    register: ps
+    async: 2592000
+    poll: 0
+
 
   vars:
     base_port: 4464
