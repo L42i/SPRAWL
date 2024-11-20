@@ -1,4 +1,4 @@
-s.options.numOutputBusChannels = 0;
+s.options.numOutputBusChannels = 2;
 s.options.numInputBusChannels = 2;
 
 
@@ -154,7 +154,7 @@ StaticText.new(~synth2,Rect(0,180,100,20)).string_("Volume");
 
 
 ~w.alwaysOnTop_(true);
-~w.front;
+~w.fullScreen;
 
 
 // Setup Smart Mesh
@@ -166,6 +166,5 @@ StaticText.new(~synth2,Rect(0,180,100,20)).string_("Volume");
 ~randomness = Synth("erie",[\out, 0]);
 	// ~randomness2 = Synth("erie",[\out, 1]);
 
-	s.meter;
 
 });

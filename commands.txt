@@ -20,3 +20,12 @@ MESH
 
 ansible-playbook -k -i ../../../config/evans_hosts.ini evans_mesh.yml
 ansible-playbook -k -i ../../../config/evans_hosts.ini jack_connections.yaml
+
+RANDOMNESS
+
+ansible-playbook -k -i ../../config/evans_hosts.ini rt_randomness.yml
+ansible-playbook -k -i ../../config/evans_hosts.ini jack_connections.yml
+
+
+
+rhytmic 
