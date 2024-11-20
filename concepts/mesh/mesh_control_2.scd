@@ -33,20 +33,34 @@
 */
 
 
-~window = Window("Mesh Remote",Rect(100,100,1600,900));
+~window = Window("Mesh Remote",Rect(100,100,1800,900));
 ~window.front;
 
 ~slider_1 = Slider(~window,Rect(10,10,100,800));
 
-~slider_1.action_({|sl|
 
-	sl.value.postln;
-	~aps.do({arg e,i; e.sendMsg(\set_network_gains, sl.value*0.1)});
+
+~xy_1 = Slider2D(~window,Rect(10,10,800,800));
+~xy_1.action_({|sl|
+
+	var shift  = sl.x * 2;
+	var gain  = sl.y * 1;
+
+
+	var x = (1+sl.x) * sl.y*abs((0..11)/12).pow(8*sl.x + 1);
+
+	~aps.do({arg e,i;
+		var y = x.rotate(i);
+		y.plot;
+		//y.postln;
+		y.do({arg element, index; e.sendMsg(\set_network_gain, element);});
+	});
 
 });
 
-~xy_1 = Slider2D(~window,Rect(400,10,800,800));
-~xy_1.action_({|sl|
+
+~xy_2 = Slider2D(~window,Rect(900,10,800,800));
+~xy_2.action_({|sl|
 
 	var time  = sl.x * 2;
 	var pitch = (sl.y-0.5) * 4;

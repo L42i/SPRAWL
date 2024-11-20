@@ -24,7 +24,7 @@ s.waitForBoot({
 
 		var in    = SoundIn.ar(Array.fill(~n_channels,inbus));
 
-		var delay = Lag.kr(time*Rand.new(0.4,0.5),0.1);
+		var delay   = Lag.kr(time*Rand.new(0.2,0.6),0.1);
 		var pitchEr = Lag.kr(max(0.1, 1+(pitch*Rand.new(-0.1,0.1))), 0.1);
 
 		var proc  = PitchShift.ar(DelayC.ar(in,1, max(0,delay)), 0.2, pitchEr);
@@ -68,16 +68,29 @@ s.waitForBoot({
 	},'/set_time');
 
 
-	OSCdef('/set_network_gain',{ arg msg;
+	OSCdef('/set_network_gains',{ arg msg;
 
 		~gain_BUS.do({arg e,i;
 			e.setAll(msg[1]);//0.rand(10)/20);
-		    e.setAt(0,1);
-		//~gain_BUS[i].setAt((i+1).wrap(1,~n_nodes),0.2);
+			e.setAt(0,1);
+			//~gain_BUS[i].setAt((i+1).wrap(1,~n_nodes),0.2);
 
 			~gain_BUS[0].setAll(msg[1]*1.5);
-			~gain_BUS[0].setAt(0,1);
+			~gain_BUS[0].setAt(0,1);});
 
-	});	},'/set_network_gain');
+	},'/set_network_gains');
+
+
+
+	OSCdef('/set_network_gain',{ arg msg;
+
+		var idx = msg[1];
+		var val = msg[2];
+
+		~gain_BUS[idx+1].setAll(val);
+
+		~gain_BUS[0].setAll(msg[1]*1.5);
+		~gain_BUS[0].setAt(0,1);
+},'/set_network_gain');
 
 });
