@@ -56,7 +56,7 @@ SynthDef(\R2, {
 	Window.screenBounds.width/2-200,
 	Window.screenBounds.height/2-200,
 	800,500));
-
+~w.background_Color(Color.magenta(0.2));
 ~synth1 = CompositeView.new(~w,Rect(10,0,250,400));
 StaticText.new(~synth1,Rect(60,0,80,20)).string_("Synth 1");
 // Generation Controls
@@ -104,57 +104,13 @@ StaticText.new(~synth1,Rect(0,180,100,20)).string_("Volume");
 	~randomness.set("gain", obj.value);
 };
 
-// arg ampHz=4, fund=40, maxPartial=4, width=0.5, out=0;
-~synth2 = CompositeView.new(~w,Rect(260,0,250,400));
-StaticText.new(~synth2,Rect(60,0,80,20)).string_("Synth2");
-// Generation Controls
-StaticText.new(~synth2,Rect(0,30,80,20)).string_("Pitch");
-~ctrlFreq = Slider.new(~synth2,Rect(95,30,150,20))
-.value_(0.04081633)
-.action_{
-	arg obj;
-	~randomness2.set("pitch", obj.value.linexp(0,1,100,5000));
-};
-StaticText.new(~synth2,Rect(0,60,80,20)).string_("Q factor");
-~ctrlQ = Slider.new(~synth2,Rect(95,60,150,20))
-.value_(0.003)
-.action_{
-	arg obj;
-	~randomness2.set("q", obj.value/4.0);
-};
-StaticText.new(~synth2,Rect(0,90,100,20)).string_("Density");
-~ctrlDensity = Slider.new(~synth2,Rect(95,90,150,20))
-.value_(0.2)
-.action_{
-	arg obj;
-	~randomness2.set("density", obj.value);
-};
-// Effects
-StaticText.new(~synth2,Rect(0,120,100,20)).string_("Delay Time");
-~ctrlPDTime = Slider.new(~synth2,Rect(95,120,150,20))
-.value_(0.096)
-.action_{
-	arg obj;
-	~randomness2.set("pd_time", obj.value * 2.0);
-};
-StaticText.new(~synth2,Rect(0,150,100,20)).string_("WetDry");
-~ctrlWetDry = Slider.new(~synth2,Rect(95,150,150,20))
-.value_(0.2)
-.action_{
-	arg obj;
-	~randomness2.set("wetDry", obj.value);
-};
-StaticText.new(~synth2,Rect(0,180,100,20)).string_("Volume");
-~ctrlGain = Slider.new(~synth2,Rect(95,180,150,20))
-.value_(0.707)
-.action_{
-	arg obj;
-	~randomness2.set("gain", obj.value);
-};
-
 
 ~w.alwaysOnTop_(true);
 ~w.fullScreen;
+<<<<<<< Updated upstream
+=======
+~w.front;
+>>>>>>> Stashed changes
 
 
 // Setup Smart Mesh
