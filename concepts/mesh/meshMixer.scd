@@ -22,9 +22,12 @@ s.waitForBoot({
 		time = 1
 		|
 
-		var in   = SoundIn.ar(Array.fill(~n_channels,inbus));
+		var in    = SoundIn.ar(Array.fill(~n_channels,inbus));
 
-		var proc = PitchShift.ar(DelayC.ar(in,1, max(0,time*Rand.new(0.4,0.5))), 0.2, max(0.1, 1+(pitch*Rand.new(-0.1,0.1))) );
+		var delay = Lag.kr(time*Rand.new(0.4,0.5),0.1);
+		var pitchEr = Lag.kr(max(0.1, 1+(pitch*Rand.new(-0.1,0.1))), 0.1);
+
+		var proc  = PitchShift.ar(DelayC.ar(in,1, max(0,delay)), 0.2, pitchEr);
 
 		Out.ar(outbus, proc* In.kr(gainbus,~n_channels));
 
@@ -72,7 +75,8 @@ s.waitForBoot({
 		    e.setAt(0,1);
 		//~gain_BUS[i].setAt((i+1).wrap(1,~n_nodes),0.2);
 
-		~gain_BUS[0].setAll(1.5);
+			~gain_BUS[0].setAll(msg[1]*1.5);
+			~gain_BUS[0].setAt(0,1);
 
 	});	},'/set_network_gain');
 
