@@ -26,6 +26,7 @@ RANDOMNESS
 ansible-playbook -k -i ../../config/evans_hosts.ini rt_randomness.yml
 ansible-playbook -k -i ../../config/evans_hosts.ini jack_connections.yml
 
+RHYTMIC 
 
 
-rhytmic 
+
