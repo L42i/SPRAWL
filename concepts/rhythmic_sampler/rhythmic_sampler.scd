@@ -418,6 +418,6 @@ s.waitForBoot({
         });
     });
 
-    w.front;
+    w.fullScreen;
 }.defer;
 });

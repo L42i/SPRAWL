@@ -30,3 +30,9 @@ RHYTMIC
 
 
 
+
+
+
+killall
+
+ansible-playbook -k -i ../config/hosts.ini killall.yml
