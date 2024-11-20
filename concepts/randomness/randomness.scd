@@ -79,7 +79,7 @@ StaticText.new(~synth1,Rect(0,90,100,20)).string_("Density");
 .value_(0.2)
 .action_{
 	arg obj;
-	~randomness.set("density", obj.value);
+	~randomness.set("density", obj.value.linexp(0,1,0.008,0.5);
 };
 // Effects
 StaticText.new(~synth1,Rect(0,120,100,20)).string_("Delay Time");
@@ -94,7 +94,7 @@ StaticText.new(~synth1,Rect(0,150,100,20)).string_("WetDry");
 .value_(0.2)
 .action_{
 	arg obj;
-	~randomness.set("wetDry", obj.value);
+	~randomness.set("wetDry", obj.value.linexp(0,1,0,0.6));
 };
 StaticText.new(~synth1,Rect(0,180,100,20)).string_("Volume");
 ~ctrlGain = Slider.new(~synth1,Rect(95,180,150,20))
@@ -107,10 +107,7 @@ StaticText.new(~synth1,Rect(0,180,100,20)).string_("Volume");
 
 ~w.alwaysOnTop_(true);
 ~w.fullScreen;
-<<<<<<< Updated upstream
-=======
 ~w.front;
->>>>>>> Stashed changes
 
 
 // Setup Smart Mesh
