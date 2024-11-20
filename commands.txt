@@ -3,7 +3,6 @@
 
 GRAINZ + LIGHTS 
 
-
 ansible-playbook -k -i ../../config/evans_hosts.ini rt_grainz.yml
 ansible-playbook -k -i ../../config/evans_hosts.ini jack_connections.yaml
 
@@ -11,3 +10,13 @@ SPECTRAL
 
 ansible-playbook -k -i ../../config/evans_hosts.ini spectralfx.yml  
 ansible-playbook -k -i ../../config/evans_hosts.ini jack_connections.yml
+
+WAVE SYNTH
+
+ansible-playbook -k -i ../../config/hosts.ini ring.yml
+ansible-playbook -k -i ../../config/hosts.ini ringIO.yml
+
+MESH
+
+ansible-playbook -k -i ../../../config/evans_hosts.ini evans_mesh.yml
+ansible-playbook -k -i ../../../config/evans_hosts.ini jack_connections.yaml

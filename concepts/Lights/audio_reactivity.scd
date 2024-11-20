@@ -36,7 +36,7 @@ t.waitForBoot{
 
                         var in, amp;
                         in = SoundIn.ar(0); // Input from audio interface channel 1
-                        in = in*10;
+                        in = in*40;
                         amp = Amplitude.kr(in);
                         amp = (amp * 255).clip(0, 255); // Scale amplitude to 0-255
                         SendReply.kr(Impulse.kr(20), '/amp', amp); // Send data 20 times per second
