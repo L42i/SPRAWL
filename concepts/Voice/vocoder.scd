@@ -1,4 +1,6 @@
-s.options.numOutputBusChannels = 6;
+s.options.numOutputBusChannels = 12;
+s.options.numInputBusChannels = 12;
+
 
 s.waitForBoot {
     var window, vocoderSlider, reverbSlider, vocoderAmount, reverbAmount, vocoderSynth;
@@ -17,7 +19,7 @@ s.waitForBoot {
         input = SoundIn.ar(inBus) * 0.3;  // Reduce input gain if too strong
 
         // Modulator signal for the vocoder (richer noise and sine wave modulation for a more dynamic effect)
-        modulator = Mix.fill(6, { |i| SinOsc.ar(150 + (i * 25)) * 0.15 }) + (WhiteNoise.ar * 0.05);
+        modulator = Mix.fill(12, { |i| SinOsc.ar(150 + (i * 25)) * 0.15 }) + (WhiteNoise.ar * 0.05);
 
         // Vocoder processing with smaller buffer size for quicker response
         vocoder = PV_MagMul(FFT(LocalBuf(256), input), FFT(LocalBuf(256), modulator));
@@ -28,8 +30,8 @@ s.waitForBoot {
         vocoderOutput = XFade2.ar(dryVocoder, wetVocoder, vocoderAmount * 2 - 1);
 
         // Define frequency bands (low to high) with a touch of detuning for richness
-        freqs = [100, 300, 500, 1000, 3000, 5000];
-        detune = [1, 0.995, 1.01, 1.10, 0.48, 1.30]; // Slight detune factors for each band
+		freqs = [100, 200, 300, 400, 450, 500, 750, 1000, 2000, 3000, 4000, 5000];
+        detune = [1, 0.995, 1.01, 1.10, 0.48, 1.30, 1, 0.995, 1.01, 1.10, 0.48, 1.30]; // Slight detune factors for each band
 
         // Apply bandpass filters to split vocoder output into 6 bands, add harmonics, and detune each slightly
         bands = freqs.collect { |freq, i|
@@ -54,20 +56,22 @@ s.waitForBoot {
     s.sync; // Wait for the server to sync the SynthDefs
 
     // Create the combined vocoder and reverb synth
-    vocoderSynth = Synth(\vocoderReverbEffect);
+    //vocoderSynth = Synth(\vocoderReverbEffect);
+	vocoderSynth = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].collect { |i| Synth(\vocoderReverbEffect,  [\inBus, i])};
 
     vocoderSlider = Slider(window, Rect(centerX, sliderY, sliderWidth, sliderHeight))
         .orientation_(\vertical) // Set slider orientation to vertical
         .action_({ |sl|
             vocoderAmount = sl.value;
-            vocoderSynth.set(\vocoderAmount, vocoderAmount);
+            //vocoderSynth.set(\vocoderAmount, vocoderAmount);
+		{ vocoderSynth.do { |synth| synth.set(\vocoderAmount, vocoderAmount); }}
         });
 
     reverbSlider = Slider(window, Rect(centerX + sliderWidth + 40, sliderY, sliderWidth, sliderHeight))
         .orientation_(\vertical) // Set slider orientation to vertical
         .action_({ |sl|
             reverbAmount = sl.value;
-            vocoderSynth.set(\reverbAmount, reverbAmount);
+            { vocoderSynth.do { |synth| synth.set(\reverbAmount, reverbAmount); }}
         });
 
     vocoderSlider.value = 0; // Start at 0% vocoder amount
