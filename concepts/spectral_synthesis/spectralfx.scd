@@ -22,12 +22,14 @@ s.waitForBoot({
 		time = 1
 		|
 		var in, chain;
-		in   = SoundIn.ar(Array.fill(~n_channels,inbus));
-		chain = FFT(LocalBuf(2048.dup(~n_channels), 1), in);
+
+		in    = SoundIn.ar(inbus);
+		chain = FFT(LocalBuf(2048, 1),in);
 		chain = PV_BrickWall(chain, (((SinOsc.kr(0.1))/2)-0.4));
-		chain = PV_BinScramble(chain, MouseX.kr , 0.1, MouseY.kr > 0.5 );
+		//chain = PV_BinScramble(chain, MouseX.kr , 0.1, MouseY.kr > 0.5 );
 		chain = PV_RectComb(chain, 8, LFTri.kr(0.097, 0, 0.4, 0.5), LFTri.kr(0.24, 0, -0.5, 0.5));
-		Out.ar(outbus, IFFT(chain)* In.kr(gainbus,~n_channels));
+
+		Out.ar(outbus, IFFT.ar(chain) * In.kr(gainbus,~n_channels));
 	}).send;
 
 	s.sync;
@@ -35,13 +37,13 @@ s.waitForBoot({
 	~mixer = Array.fill(~n_channels,{arg i;
 		i.postln;
 		Synth(\mesh_mixer,[
+			//\outbus,0,
 			\inbus  ,i,
-			\outbus ,0,
+			\iZutbus ,0,
 			\gainbus,~gain_BUS[i]
 		]);
 	});
 
-	s.meter;
 
 	~gain_BUS.do({arg e,i;
 		e.setAll(0.08);//0.rand(10)/20);
@@ -75,5 +77,14 @@ s.waitForBoot({
 		~gain_BUS[0].setAll(1.5);
 
 	});	},'/set_network_gain');
+
+
+	w = Window("SPECTRAL",Rect(10,10,100,100)).fullScreen;
+
+	a = TextField(w, Rect(500, 400, 100, 100));
+	a.string = "SPECTRAL";
+	a.action = {arg field; field.value.postln; };
+
+	s.meter;
 
 });

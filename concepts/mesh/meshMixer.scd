@@ -44,7 +44,6 @@ s.waitForBoot({
 		]);
 	});
 
-	s.meter;
 
 	~gain_BUS.do({arg e,i;
 		e.setAll(0.08);//0.rand(10)/20);
@@ -73,6 +72,7 @@ s.waitForBoot({
 		~gain_BUS.do({arg e,i;
 			e.setAll(msg[1]);//0.rand(10)/20);
 			e.setAt(0,1);
+
 			//~gain_BUS[i].setAt((i+1).wrap(1,~n_nodes),0.2);
 
 			~gain_BUS[0].setAll(msg[1]*1.5);
@@ -81,16 +81,26 @@ s.waitForBoot({
 	},'/set_network_gains');
 
 
-
 	OSCdef('/set_network_gain',{ arg msg;
 
 		var idx = msg[1];
 		var val = msg[2];
 
-		~gain_BUS[idx+1].setAll(val);
+		//~gain_BUS[idx+1].setAll(val);
 
-		~gain_BUS[0].setAll(msg[1]*1.5);
-		~gain_BUS[0].setAt(0,1);
-},'/set_network_gain');
+		~gain_BUS[0].setAll(val*2.5);
+
+		~gain_BUS[0].setAt(0,0.9);
+
+	},'/set_network_gain');
+
+
+	w = Window("MaESH",Rect(10,10,100,100)).fullScreen;
+
+	a = TextField(w, Rect(500, 400, 100, 100));
+	a.string = "MaESH";
+	a.action = {arg field; field.value.postln; };
+
+	s.meter;
 
 });

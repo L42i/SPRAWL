@@ -44,16 +44,16 @@
 ~xy_1.action_({|sl|
 
 	var shift  = sl.x * 2;
-	var gain  = sl.y * 1;
+	var gain  = sl.y * 3;
 
 
-	var x = (1+sl.x) * sl.y*abs((0..11)/12).pow(8*sl.x + 1);
+	var x = 3*((1+sl.x) * sl.y*abs((0..11)/12).pow(8*sl.x + 1));
 
 	~aps.do({arg e,i;
 		var y = x.rotate(i);
-		y.plot;
-		//y.postln;
-		y.do({arg element, index; e.sendMsg(\set_network_gain, element);});
+		// y.plot;
+		 //y.postln;
+		y.do({arg element, index; e.sendMsg(\set_network_gain, i,element);});
 	});
 
 });

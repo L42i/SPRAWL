@@ -41,7 +41,7 @@
 ~slider_1.action_({|sl|
 
 	sl.value.postln;
-	~aps.do({arg e,i; e.sendMsg(\set_network_gains, sl.value*0.1)});
+	~aps.do({arg e,i; e.sendMsg(\set_network_gains, i, sl.value*0.1)});
 
 });
 
